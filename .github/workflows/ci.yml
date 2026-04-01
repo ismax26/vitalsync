@@ -27,8 +27,12 @@ jobs:
         run: cd backend && npm test
 
   build-and-push:
+   build-and-push:
     needs: lint-and-test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
       - uses: actions/checkout@v4
 
