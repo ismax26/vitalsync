@@ -1,0 +1,54 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/${POSTGRES_DB}
+    depends_on:
+      - database
+    networks:
+      - vitalsync-network
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - vitalsync-network
+
+  database:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - vitalsync-network
+
+networks:
+  vitalsync-network:
+    driver: bridge
+
+volumes:
+  pgdata:
+```
+
+Crée `.env` à la racine (celui-ci ne sera PAS commité grâce au .gitignore) :
+```
+POSTGRES_USER=vitalsync
+POSTGRES_PASSWORD=secretpass123
+POSTGRES_DB=vitalsync_db
+```
+
+Crée aussi `.env.example` à la racine (celui-ci sera commité) :
+```
+POSTGRES_USER=your_username
+POSTGRES_PASSWORD=your_password
+POSTGRES_DB=your_database_name
