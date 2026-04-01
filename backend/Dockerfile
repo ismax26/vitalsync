@@ -1,3 +1,6 @@
+# Multi-stage build : permet de séparer l'étape de build/test de l'image finale.
+# Avantages : l'image de production est plus légère (pas de devDependencies)
+# et plus sécurisée (moins de surface d'attaque, pas d'outils de build).
 
 # Stage 1 : Installation des dépendances et exécution des tests
 FROM node:20-alpine AS builder
@@ -16,14 +19,3 @@ COPY --from=builder /app/server.js .
 EXPOSE 3000
 USER node
 CMD ["node", "server.js"]
-```
-
-Crée aussi `backend/.dockerignore` :
-```
-node_modules
-npm-debug.log
-.git
-.gitignore
-test
-coverage
-.env
