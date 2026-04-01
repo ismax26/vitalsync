@@ -38,17 +38,3 @@ networks:
 
 volumes:
   pgdata:
-```
-
-Crée `.env` à la racine (celui-ci ne sera PAS commité grâce au .gitignore) :
-```
-POSTGRES_USER=vitalsync
-POSTGRES_PASSWORD=secretpass123
-POSTGRES_DB=vitalsync_db
-```
-
-Crée aussi `.env.example` à la racine (celui-ci sera commité) :
-```
-POSTGRES_USER=your_username
-POSTGRES_PASSWORD=your_password
-POSTGRES_DB=your_database_name
